@@ -16,9 +16,11 @@
 
 package autotorch.autotorch.client;
 
+import me.shedaniel.autoconfig.ConfigData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
@@ -27,26 +29,40 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.hit.BlockHitResult;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.Block;
 import net.minecraft.world.LightType;
+
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigHolder;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+
 
 
 @Environment(EnvType.CLIENT)
 public class AutotorchClient implements ClientModInitializer {
     private MinecraftClient client;
+    public ConfigHolder<ModConfig> CONFIG;
+    private ModConfig CDATA;
 
     @Override
     public void onInitializeClient() {
         this.client = MinecraftClient.getInstance();
+        CONFIG = AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         ClientTickEvents.END_CLIENT_TICK.register(this::tick);
-
+        CDATA = CONFIG.getConfig();
+        CONFIG.registerLoadListener((manager, data) -> {
+            CDATA = data;
+            return ActionResult.SUCCESS;
+        });
     }
     public void tick(MinecraftClient client) {
+        if (!CDATA.enabled) return;
         if(client.player != null && client.world != null) {
             if (client.player.getOffHandStack().getItem() != Items.TORCH) return;
             BlockPos PlayerBlock = new BlockPos(client.player.getPos());
-            if (client.world.getLightLevel(LightType.BLOCK, PlayerBlock) <= 7 && canPlaceTorch(PlayerBlock)) {
+            if (client.world.getLightLevel(LightType.BLOCK, PlayerBlock) < CDATA.lightLevel && canPlaceTorch(PlayerBlock)) {
                 offHandRightClickBlock(PlayerBlock);
             }
         }

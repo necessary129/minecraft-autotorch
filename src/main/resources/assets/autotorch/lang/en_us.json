@@ -1,0 +1,5 @@
+{
+  "text.autoconfig.autotorch.title": "Auto Torch",
+  "text.autoconfig.autotorch.option.enabled": "Enable Auto Torch",
+  "text.autoconfig.autotorch.option.lightLevel": "Minimum Light Level"
+}

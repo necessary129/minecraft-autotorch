@@ -18,6 +18,9 @@
   "entrypoints": {
     "client": [
       "autotorch.autotorch.client.AutotorchClient"
+    ],
+    "modmenu": [
+      "autotorch.autotorch.client.ModMenuIntegration"
     ]
   },
   "depends": {

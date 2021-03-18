@@ -16,7 +16,6 @@
 
 package autotorch.autotorch.client;
 
-import me.shedaniel.autoconfig.ConfigData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -31,6 +30,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.block.Block;
 import net.minecraft.world.LightType;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 
@@ -69,6 +69,10 @@ public class AutotorchClient implements ClientModInitializer {
     }
     private boolean offHandRightClickBlock(BlockPos pos) {
         Vec3d hitVec = Vec3d.ofBottomCenter(pos);
+        if (CDATA.accuratePlacement) {
+            PlayerMoveC2SPacket.LookOnly packet = new PlayerMoveC2SPacket.LookOnly(client.player.yaw, 90.0F, true);
+            client.player.networkHandler.sendPacket(packet);
+        }
         ActionResult one = client.interactionManager.interactBlock(client.player, client.world, Hand.OFF_HAND,
                 new BlockHitResult(hitVec, Direction.DOWN, pos, false));
         ActionResult two = client.interactionManager.interactItem(client.player, client.world, Hand.OFF_HAND);

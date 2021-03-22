@@ -1,7 +1,6 @@
 plugins {
     id 'fabric-loom' version '0.6-SNAPSHOT'
     id 'maven-publish'
-    id "com.modrinth.minotaur" version "1.1.0"
 }
 repositories {
     maven { url 'https://maven.shedaniel.me/' }
@@ -83,22 +82,4 @@ publishing {
         // uncomment to publish to the local maven
         // mavenLocal()
     }
-}
-
-import com.modrinth.minotaur.TaskModrinthUpload
-
-task publishModrinth (type: TaskModrinthUpload) {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    token = System.getenv("MODRINTH_TOKEN") // Get the GitHub Access Token you got from the basics part of this tutorial.
-    projectId = "YHeYlxN5" // Enter your modrinth mod ID here.
-    //System.out.println("Enter the version number:");
-    versionNumber = project.version;
-    //System.out.println("Enter the version name:");
-    //versionName = br.readLine();
-    uploadFile = remapJar // This links to a task that builds your mod jar and sets "uploadFile" to the mod jar.
-    System.out.println("Enter the game version number: (See minotaur docs for valids)");
-    addGameVersion(br.readLine());
-    System.out.println("Enter changelog:");
-    changelog = br.readLine();
-    addLoader("fabric")
 }

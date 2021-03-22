@@ -16,4 +16,4 @@ You can change the light level at which the mod starts placing torches using the
 
 You can enable the Accurate Torch Placement option in the Mod settings if you want your torch to be placed on top of the block you are standing on, every time. It is trned off by default because it can be considered cheaty. So be careful while using it.
 
-**NOTE: This is a client only mod. It wouldn't do anything on a server.**
+**NOTE: You only need to install this on your client. Installing on server is unnecessary.**

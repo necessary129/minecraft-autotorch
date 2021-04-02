@@ -16,11 +16,14 @@
 
 package autotorch.autotorch.client;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -45,6 +48,7 @@ public class AutotorchClient implements ClientModInitializer {
     private MinecraftClient client;
     public ConfigHolder<ModConfig> CONFIG;
     private ModConfig CDATA;
+    static final ImmutableSet<Item> TorchSet = ImmutableSet.of(Items.TORCH, Items.SOUL_TORCH);
 
     @Override
     public void onInitializeClient() {
@@ -60,7 +64,7 @@ public class AutotorchClient implements ClientModInitializer {
     public void tick(MinecraftClient client) {
         if (!CDATA.enabled) return;
         if(client.player != null && client.world != null) {
-            if (client.player.getOffHandStack().getItem() != Items.TORCH) return;
+            if (!TorchSet.contains(client.player.getOffHandStack().getItem())) return;
             BlockPos PlayerBlock = new BlockPos(client.player.getPos());
             if (client.world.getLightLevel(LightType.BLOCK, PlayerBlock) < CDATA.lightLevel && canPlaceTorch(PlayerBlock)) {
                 offHandRightClickBlock(PlayerBlock);

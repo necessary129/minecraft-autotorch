@@ -74,7 +74,7 @@ public class AutotorchClient implements ClientModInitializer {
     private boolean offHandRightClickBlock(BlockPos pos) {
         Vec3d hitVec = Vec3d.ofBottomCenter(pos);
         if (CDATA.accuratePlacement) {
-            PlayerMoveC2SPacket.LookOnly packet = new PlayerMoveC2SPacket.LookOnly(client.player.yaw, 90.0F, true);
+            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true);
             client.player.networkHandler.sendPacket(packet);
         }
         ActionResult one = client.interactionManager.interactBlock(client.player, client.world, Hand.OFF_HAND,

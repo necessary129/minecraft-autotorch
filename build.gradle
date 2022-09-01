@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.9-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'org.ajoberstar.grgit' version '4.1.0'
 }
 repositories {
@@ -8,8 +8,8 @@ repositories {
     maven { url = "https://jitpack.io" }
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = "${project.archives_base_name}-mc${project.minecraft_version}"
 version = "${project.mod_version}+${getVersionMetadata()}"
@@ -53,8 +53,8 @@ tasks.withType(JavaCompile).configureEach {
     // If Javadoc is generated, this must be specified in that task too.
     it.options.encoding = "UTF-8"
 
-    // Minecraft 1.17 (21w19a) upwards uses Java 16.
-    it.options.release = 16
+    // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+    it.options.release = 17
 }
 
 jar {
@@ -66,7 +66,7 @@ java {
     // if it is present.
     // If you remove this line, sources will not be generated.
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(16))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
     withSourcesJar()
 

@@ -77,9 +77,9 @@ public class AutotorchClient implements ClientModInitializer {
             PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true);
             client.player.networkHandler.sendPacket(packet);
         }
-        ActionResult one = client.interactionManager.interactBlock(client.player, client.world, Hand.OFF_HAND,
+        ActionResult one = client.interactionManager.interactBlock(client.player,Hand.OFF_HAND,
                 new BlockHitResult(hitVec, Direction.DOWN, pos, false));
-        ActionResult two = client.interactionManager.interactItem(client.player, client.world, Hand.OFF_HAND);
+        ActionResult two = client.interactionManager.interactItem(client.player,Hand.OFF_HAND);
         return (one.isAccepted() && two.isAccepted());
     }
     public boolean canPlaceTorch(BlockPos pos) {

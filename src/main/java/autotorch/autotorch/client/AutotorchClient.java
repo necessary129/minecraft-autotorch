@@ -64,8 +64,7 @@ public class AutotorchClient implements ClientModInitializer {
     public void tick(MinecraftClient client) {
         if (!CDATA.enabled) return;
         if(client.player != null && client.world != null) {
-            if (!TorchSet.contains(client.player.getOffHandStack().getItem())) return;
-            BlockPos PlayerBlock = new BlockPos(client.player.getPos());
+            BlockPos PlayerBlock = client.player.getBlockPos();
             if (client.world.getLightLevel(LightType.BLOCK, PlayerBlock) < CDATA.lightLevel && canPlaceTorch(PlayerBlock)) {
                 offHandRightClickBlock(PlayerBlock);
             }

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "autotorch",
+  "version": "${version}",
+  "name": "Autotorch",
+  "description": "Autoplace torches",
+  "authors": [
+    "noteness"
+  ],
+  "contact": {
+    "homepage": "https://github.com/necessary129/minecraft-autotorch",
+    "issues": "https://github.com/necessary129/minecraft-autotorch/issues",
+    "sources": "https://github.com/necessary129/minecraft-autotorch"
+  },
+  "license": "LGPL-3.0-or-later",
+  "icon": "assets/autotorch/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "autotorch.autotorch.client.AutotorchClient"
+    ],
+    "modmenu": [
+      "autotorch.autotorch.client.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.11.1",
+    "minecraft": ">=1.17",
+    "fabric": ">=0.30.0"
+  }
+}

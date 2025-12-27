@@ -57,9 +57,8 @@ public class AutotorchClient implements ClientModInitializer {
     private static final KeyBinding AutoPlaceBinding = KeyBindingHelper.registerKeyBinding(
             new KeyBinding(
                     "autotorch.autotorch.toggle",
-                    InputUtil.Type.KEYSYM,
                     GLFW.GLFW_KEY_LEFT_ALT,
-                    "category.autotorch.main"
+                    KeyBinding.Category.MISC
             )
     );
 
@@ -94,7 +93,7 @@ public class AutotorchClient implements ClientModInitializer {
     private void offHandRightClickBlock(BlockPos pos) {
         Vec3d hitVec = Vec3d.ofBottomCenter(pos);
         if (CDATA.accuratePlacement) {
-            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true);
+            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true, true);
             client.player.networkHandler.sendPacket(packet);
         }
         ActionResult one = client.interactionManager.interactBlock(client.player, Hand.OFF_HAND,

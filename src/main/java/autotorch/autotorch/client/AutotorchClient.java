@@ -38,6 +38,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.block.Block;
 import net.minecraft.world.LightType;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.Identifier;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 
@@ -59,7 +60,7 @@ public class AutotorchClient implements ClientModInitializer {
                     "autotorch.autotorch.toggle",
                     InputUtil.Type.KEYSYM,
                     GLFW.GLFW_KEY_LEFT_ALT,
-                    "category.autotorch.main"
+                    new KeyBinding.Category(Identifier.tryParse("autotorch:main"))
             )
     );
 
@@ -94,7 +95,7 @@ public class AutotorchClient implements ClientModInitializer {
     private void offHandRightClickBlock(BlockPos pos) {
         Vec3d hitVec = Vec3d.ofBottomCenter(pos);
         if (CDATA.accuratePlacement) {
-            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true);
+            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true, true);
             client.player.networkHandler.sendPacket(packet);
         }
         ActionResult one = client.interactionManager.interactBlock(client.player, Hand.OFF_HAND,

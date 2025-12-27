@@ -1,7 +1,7 @@
 plugins {
     id 'base'
     id 'java'
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.14-SNAPSHOT'
     id 'org.ajoberstar.grgit' version '5.2.2'
 }
 repositories {
@@ -43,7 +43,7 @@ dependencies {
     include "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-}
+} 
 
 processResources {
     inputs.property "version", project.version

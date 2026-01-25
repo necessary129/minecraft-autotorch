@@ -31,6 +31,7 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Direction;
@@ -54,12 +55,14 @@ public class AutotorchClient implements ClientModInitializer {
     private ModConfig CDATA;
     private static final ImmutableSet<Item> TorchSet = ImmutableSet.of(Items.TORCH, Items.SOUL_TORCH);
 
+    private static final KeyBinding.Category keyCategory = KeyBinding.Category.create(Identifier.of("autotorch", "optionCategory"));
+
     private static final KeyBinding AutoPlaceBinding = KeyBindingHelper.registerKeyBinding(
             new KeyBinding(
                     "autotorch.autotorch.toggle",
                     InputUtil.Type.KEYSYM,
                     GLFW.GLFW_KEY_LEFT_ALT,
-                    "category.autotorch.main"
+                    keyCategory
             )
     );
 
@@ -94,7 +97,7 @@ public class AutotorchClient implements ClientModInitializer {
     private void offHandRightClickBlock(BlockPos pos) {
         Vec3d hitVec = Vec3d.ofBottomCenter(pos);
         if (CDATA.accuratePlacement) {
-            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true);
+            PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true, false);
             client.player.networkHandler.sendPacket(packet);
         }
         ActionResult one = client.interactionManager.interactBlock(client.player, Hand.OFF_HAND,

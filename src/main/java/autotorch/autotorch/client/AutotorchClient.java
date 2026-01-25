@@ -55,7 +55,7 @@ public class AutotorchClient implements ClientModInitializer {
     private ModConfig CDATA;
     private static final ImmutableSet<Item> TorchSet = ImmutableSet.of(Items.TORCH, Items.SOUL_TORCH);
 
-    private static final KeyBinding.Category keyCategory = KeyBinding.Category.create(Identifier.of("autotorch", "optionCategory"));
+    private static final KeyBinding.Category keyCategory = KeyBinding.Category.create(Identifier.of("autotorch", "options"));
 
     private static final KeyBinding AutoPlaceBinding = KeyBindingHelper.registerKeyBinding(
             new KeyBinding(

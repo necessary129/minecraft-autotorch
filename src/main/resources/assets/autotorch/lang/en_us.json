@@ -6,5 +6,5 @@
   "autotorch.message.enabled": "Enabled automatic torch placement",
   "autotorch.message.disabled": "Disabled automatic torch placement",
   "autotorch.autotorch.toggle": "Toggle Autotorch",
-  "category.autotorch.main": "Auto Torch"
+  "key.category.autotorch.options": "Auto Torch"
 }

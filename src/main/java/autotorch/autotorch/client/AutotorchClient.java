@@ -46,6 +46,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
 
 
 @Environment(EnvType.CLIENT)
@@ -55,7 +56,10 @@ public class AutotorchClient implements ClientModInitializer {
     private ModConfig CDATA;
     private static final ImmutableSet<Item> TorchSet = ImmutableSet.of(Items.TORCH, Items.SOUL_TORCH);
 
-    private static final KeyBinding.Category keyCategory = KeyBinding.Category.create(Identifier.of("autotorch", "options"));
+    private static final KeyBinding.Category keyCategory = KeyBinding.Category.create(Identifier.of("autotorch", "optioncategory"));
+
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger("autotorch");
+
 
     private static final KeyBinding AutoPlaceBinding = KeyBindingHelper.registerKeyBinding(
             new KeyBinding(
@@ -79,6 +83,7 @@ public class AutotorchClient implements ClientModInitializer {
     }
 
     public void tick(MinecraftClient client) {
+        //logger.info("This is actually running");
         if (client.player != null && client.world != null) {
             if (AutoPlaceBinding.wasPressed()) {
                 CDATA.enabled = !CDATA.enabled;
@@ -95,14 +100,18 @@ public class AutotorchClient implements ClientModInitializer {
     }
 
     private void offHandRightClickBlock(BlockPos pos) {
-        Vec3d hitVec = Vec3d.ofBottomCenter(pos);
+        logger.info("Placing torch at {}", pos.toString());
+        BlockPos target = pos.down(); // place on top of the block below the player
+        Vec3d hitVec = Vec3d.ofCenter(target);
         if (CDATA.accuratePlacement) {
             PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(client.player.getYaw(), 90.0F, true, false);
             client.player.networkHandler.sendPacket(packet);
         }
-        ActionResult one = client.interactionManager.interactBlock(client.player, Hand.OFF_HAND,
-                new BlockHitResult(hitVec, Direction.DOWN, pos, false));
-        ActionResult two = client.interactionManager.interactItem(client.player, Hand.OFF_HAND);
+        ActionResult result = client.interactionManager.interactBlock(client.player, Hand.OFF_HAND,
+                new BlockHitResult(hitVec, Direction.UP, target, false));
+        if (result == ActionResult.PASS) {
+            client.interactionManager.interactItem(client.player, Hand.OFF_HAND);
+        }
     }
 
     public boolean canPlaceTorch(BlockPos pos) {
